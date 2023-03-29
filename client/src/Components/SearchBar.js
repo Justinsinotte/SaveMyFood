@@ -3,7 +3,13 @@ import { useState, useEffect, useRef } from "react";
 import React from "react";
 import { newDataArray } from "../Functions/objectArray";
 
-const SearchBar = ({ userIngredients, setUserIngredients }) => {
+const SearchBar = ({
+  userIngredients,
+  setUserIngredients,
+  setRefresh,
+  resfresh,
+}) => {
+  const suggestionBoxRef = useRef(null);
   const [inputValue, setInputValue] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
@@ -25,9 +31,12 @@ const SearchBar = ({ userIngredients, setUserIngredients }) => {
   const handleClick = (name, id) => {
     setUserIngredients([...userIngredients, { name, id }]);
     setSelectedIds([...selectedIds, id]);
-    setShowSuggestions(false);
+    setInputValue(inputValue);
+
+    // setShowSuggestions(false);
     const addUserIngredient = async () => {
       try {
+        setRefresh(!resfresh);
         const response = await fetch("/api/userIngredients", {
           method: "POST",
           headers: {
@@ -46,12 +55,9 @@ const SearchBar = ({ userIngredients, setUserIngredients }) => {
     addUserIngredient();
   };
 
-  const suggestionBoxRef = useRef(null);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest("#suggestion-box")) {
-        console.log("click");
         setShowSuggestions(false);
       }
     };
@@ -75,39 +81,45 @@ const SearchBar = ({ userIngredients, setUserIngredients }) => {
     <React.Fragment>
       <InputWrapper>
         <Input
+          placeholder="Search for ingredients..."
           type="text"
           value={inputValue}
-          onChange={(ev) => setInputValue(ev.target.value)}
+          onChange={(ev) => {
+            setInputValue(ev.target.value);
+            setShowSuggestions(true);
+          }}
         />
         <Button onClick={handleClear}>Clear</Button>
       </InputWrapper>
-      {inputValue.length >= 1 && filteredSuggestions.length > 0 && (
-        <Suggestions id="suggestion-box" ref={suggestionBoxRef}>
-          <ul>
-            {filteredSuggestions.map((ingredient) => {
-              const isDisabled = selectedIds.includes(ingredient.id);
-              const className = isDisabled ? "disabled" : "";
-              return (
-                <SuggestionItem
-                  key={ingredient.id}
-                  value={ingredient.name}
-                  onClick={() => handleClick(ingredient.name, ingredient.id)}
-                  className={className}
-                >
-                  {ingredient.name}
-                </SuggestionItem>
-              );
-            })}
-          </ul>
-        </Suggestions>
-      )}
-      <UL>
+      {inputValue.length >= 1 &&
+        filteredSuggestions.length > 0 &&
+        showSuggestions && (
+          <Suggestions id="suggestion-box" ref={suggestionBoxRef}>
+            <ul>
+              {filteredSuggestions.map((ingredient) => {
+                const isDisabled = selectedIds.includes(ingredient.id);
+                const className = isDisabled ? "disabled" : "";
+                return (
+                  <SuggestionItem
+                    key={ingredient.id}
+                    value={ingredient.name}
+                    onClick={() => handleClick(ingredient.name, ingredient.id)}
+                    className={className}
+                  >
+                    {ingredient.name.toUpperCase()}
+                  </SuggestionItem>
+                );
+              })}
+            </ul>
+          </Suggestions>
+        )}
+      {/* <UL>
         {userIngredients.map((ingredient) => (
           <li key={ingredient.id}>
             {ingredient.name}({ingredient.id})
           </li>
         ))}
-      </UL>
+      </UL> */}
     </React.Fragment>
   );
 };
@@ -147,19 +159,20 @@ const SuggestionItem = styled.div`
 `;
 
 const Input = styled.input`
-  padding: 0.4em;
-  width: 25em;
+  padding: 1.4em;
+  width: 80%;
   border: 1px solid lightgray;
-  border-radius: 3px;
+  border-radius: 15px;
 `;
 
 const Button = styled.button`
-  padding: 0.5em;
-  width: 5em;
+  height: 4em;
+  padding: 1.2em;
+  width: 7em;
   margin-left: 0.7em;
   color: white;
-  background-color: rgb(0, 0, 200);
-  border-radius: 5px;
+  background-color: rgb(0 106 200 / 74%);
+  border-radius: 15px;
   border: none;
 `;
 

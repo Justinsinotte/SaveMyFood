@@ -25,41 +25,16 @@ const test = async (req, res) => {
   }
 };
 
-const postUserIngredient = async (req, res) => {
+const postUserIngredients = async (req, res) => {
   try {
     const client = new MongoClient(MONGO_URI, options);
     await client.connect();
     const db = client.db("finalProject");
     const newOrder = req.body;
-    const itemId = Number(req.body.itemId);
-    const itemAmount = req.body.itemAmount;
     const id = uuidv4();
     newOrder._id = id;
 
-    //     const itemMongo = await db.collection("userIngredients").findOne({ _id: itemId });
-    //     const numInStock = itemMongo.numInStock;
-
-    // if (!newOrder.name || !newOrder.price || !newOrder.category) {
-    //       return res.status(404).json({
-    //         status: 404,
-    //         data: newOrder,
-    //         message: "Failed to make a new order",
-    //       });
-    //     } else {
-    //   await db
-    //     .collection("items")
-    //     .updateOne(
-    //       { _id: itemId },
-    //       { $set: { numInStock: numInStock - itemAmount } }
-    //     );
-
     await db.collection("userIngredients").insertOne(newOrder);
-    //   if (!numInStockValues[itemId]) {
-    //     numInStockValues[itemId] = numInStock - itemAmount;
-    //   } else {
-    //     numInStockValues[itemId] -= itemAmount;
-    //   }
-
     res.status(201).json({ status: 201, data: newOrder });
 
     await client.close();
@@ -70,4 +45,35 @@ const postUserIngredient = async (req, res) => {
   }
 };
 
-module.exports = { test, postUserIngredient };
+const getUserIngredients = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  try {
+    await client.connect();
+    const db = client.db("finalProject");
+    const cartItems = await db.collection("userIngredients").find().toArray();
+    if (cartItems.length === 0) {
+      res.status(400).json({
+        status: 400,
+        data: cartItems,
+        message: "Error: Ingredients not found.",
+      });
+    } else {
+      return res.status(200).json({
+        status: 200,
+        data: cartItems,
+        message: "Got Ingredients",
+      });
+    }
+
+    await client.close();
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      status: 500,
+      data: "Internal Server Error",
+    });
+    await client.close();
+  }
+};
+
+module.exports = { test, postUserIngredients, getUserIngredients };
