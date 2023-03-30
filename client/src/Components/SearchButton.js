@@ -33,8 +33,12 @@ const Button = styled.button`
   border-radius: 15px;
   border: none;
 
-  &:active {
+  &:hover {
     background-color: rgba(0, 106, 200, 0.9);
+  }
+
+  &:active {
+    background-color: rgba(0, 106, 200, 1);
   }
 `;
 

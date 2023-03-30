@@ -1,7 +1,28 @@
 import React from "react";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-const MainRecipe = ({ recipes }) => {
+const MainRecipe = ({ recipes, setRecipes, refresh }) => {
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch("/api/userRecipes");
+        const data = await response.json();
+
+        if (response.status === 200) {
+          console.log(data.data);
+          setRecipes(data.data);
+          //   console.log(items);
+        } else {
+          console.error("Error: The items were not found.", data);
+        }
+      } catch (error) {
+        console.error("The was an error fetching the items:", error);
+      }
+    };
+    fetchItems();
+    // console.log(refresh);
+  }, [refresh]);
+
   return (
     <MainDiv>
       <ItemsWrapper>

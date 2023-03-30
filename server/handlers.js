@@ -113,6 +113,7 @@ const delAllUserIngredients = async (req, res) => {
     const db = client.db("finalProject");
 
     await db.collection("userIngredients").deleteMany({});
+    // await db.collection("userRecipes").deleteMany({});
     res.status(200).json({
       status: 200,
       message: "Deleted Ingredient",
@@ -141,6 +142,7 @@ const getIngredientsQuery = async (req, res) => {
     const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${query}&number=25&ranking=1${API}`;
     const response = await fetch(url);
     const data = await response.json();
+    await db.collection("userRecipes").deleteMany({});
     await db.collection("userRecipes").insertMany(data);
     await client.close();
 
@@ -207,7 +209,7 @@ const delAllRecipes = async (req, res) => {
     await client.connect();
     const db = client.db("finalProject");
 
-    await db.collection("allRecipes").deleteMany({});
+    await db.collection("userRecipes").deleteMany({});
     res.status(200).json({
       status: 200,
       message: "Deleted all Recipes",

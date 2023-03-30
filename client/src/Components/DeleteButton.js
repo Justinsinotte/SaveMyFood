@@ -30,7 +30,7 @@ const DeleteButton = ({ itemId, setRefresh, selectedIds, setSelectedIds }) => {
   return <Button onClick={handleDelete}>X</Button>;
 };
 
-const Button = styled.div`
+const Button = styled.button`
   height: 1.5em;
   padding: 0px;
   width: 1.5em;

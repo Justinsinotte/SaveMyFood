@@ -34,6 +34,13 @@ const Button = styled.button`
   background-color: rgba(0, 106, 200, 0.74);
   border-radius: 15px;
   border: none;
+  &:hover {
+    background-color: rgba(0, 106, 200, 0.9);
+  }
+
+  &:active {
+    background-color: rgba(0, 106, 200, 1);
+  }
 `;
 
 export default ClearAllButton;

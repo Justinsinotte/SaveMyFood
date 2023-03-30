@@ -47,7 +47,11 @@ function App() {
             setRecipes={setRecipes}
           />
           <DietBar />
-          <MainRecipe recipes={recipes} setRecipes={setRecipes} />
+          <MainRecipe
+            recipes={recipes}
+            setRecipes={setRecipes}
+            refresh={refresh}
+          />
         </CenterWrapper>
         <RightWrapper>
           <SignInProfile />
