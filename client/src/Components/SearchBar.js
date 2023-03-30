@@ -2,21 +2,24 @@ import styled from "styled-components";
 import { useState, useEffect, useRef } from "react";
 import React from "react";
 import { newDataArray } from "../Functions/objectArray";
-
+import SearchButton from "./SearchButton";
 const SearchBar = ({
   userIngredients,
   setUserIngredients,
   setRefresh,
-  resfresh,
+  refresh,
+  selectedIds,
+  setSelectedIds,
+  recipes,
+  setRecipes,
 }) => {
   const suggestionBoxRef = useRef(null);
   const [inputValue, setInputValue] = useState("");
   const [ingredients, setIngredients] = useState([]);
-  const [selectedIds, setSelectedIds] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const handleClear = () => {
-    setInputValue("");
-  };
+  // const handleClear = () => {
+  //   setInputValue("");
+  // };
 
   const filteredSuggestions = ingredients.filter((ingredient) => {
     const ingredientLowerCase = ingredient.name.toLowerCase();
@@ -36,7 +39,6 @@ const SearchBar = ({
     // setShowSuggestions(false);
     const addUserIngredient = async () => {
       try {
-        setRefresh(!resfresh);
         const response = await fetch("/api/userIngredients", {
           method: "POST",
           headers: {
@@ -46,7 +48,11 @@ const SearchBar = ({
             name: name,
             id: id,
           }),
-        });
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setRefresh((refresh) => !refresh);
+          });
       } catch (error) {
         console.log("There was an error:", error);
       }
@@ -78,7 +84,7 @@ const SearchBar = ({
   }, []);
 
   return (
-    <React.Fragment>
+    <MainDiv>
       <InputWrapper>
         <Input
           placeholder="Search for ingredients..."
@@ -89,7 +95,8 @@ const SearchBar = ({
             setShowSuggestions(true);
           }}
         />
-        <Button onClick={handleClear}>Clear</Button>
+        <SearchButton recipes={recipes} setRecipes={setRecipes} />
+        {/* <Button onClick={handleClear}>Clear</Button> */}
       </InputWrapper>
       {inputValue.length >= 1 &&
         filteredSuggestions.length > 0 &&
@@ -113,27 +120,33 @@ const SearchBar = ({
             </ul>
           </Suggestions>
         )}
-      {/* <UL>
-        {userIngredients.map((ingredient) => (
-          <li key={ingredient.id}>
-            {ingredient.name}({ingredient.id})
-          </li>
-        ))}
-      </UL> */}
-    </React.Fragment>
+    </MainDiv>
   );
 };
 
-const UL = styled.ul`
-  margin-left: 700px;
+const MainDiv = styled.div`
+  /* position: absolute;
+  top: 0;
+  left: 21%; */
+  display: flex;
+  flex-direction: column;
+  /* height: 4em; */
+
+  /* border: 1px solid black; */
+  background-color: lightblue;
 `;
 
 const InputWrapper = styled.div`
   display: flex;
+  flex-direction: row;
+  margin-left: em;
+  width: 40em;
   align-items: center;
   flex-direction: row;
 `;
 const Suggestions = styled.div`
+  position: absolute;
+  top: 3em;
   width: 25em;
   margin-top: 0.5em;
   padding: 0;

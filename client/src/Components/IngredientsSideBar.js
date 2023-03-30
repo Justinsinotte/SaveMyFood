@@ -1,9 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import React from "react";
 import styled from "styled-components";
-const IngredientsSideBar = ({ userIngredients, refresh, setRefresh }) => {
-  const [items, setItems] = useState([]);
-
+import DeleteButton from "./DeleteButton";
+import ClearAllButton from "./ClearAllButton";
+const IngredientsSideBar = ({
+  refresh,
+  setRefresh,
+  items,
+  setItems,
+  selectedIds,
+  setSelectedIds,
+}) => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -13,7 +20,6 @@ const IngredientsSideBar = ({ userIngredients, refresh, setRefresh }) => {
         if (response.status === 200) {
           //   console.log(data.data);
           setItems(data.data);
-
           //   console.log(items);
         } else {
           console.error("Error: The items were not found.", data);
@@ -23,30 +29,58 @@ const IngredientsSideBar = ({ userIngredients, refresh, setRefresh }) => {
       }
     };
     fetchItems();
-    console.log(refresh);
+    // console.log(refresh);
   }, [refresh]);
 
-  console.log(items);
-  if (items.length === 0) {
-    return <h1>loading</h1>;
-  }
+  //   console.log(items);
 
   return (
     <ItemListWrapper>
-      {items.map((item, index) => (
-        <li key={index}>
-          <div>{item.name}</div>
-        </li>
-      ))}
+      <ClearAllButton
+        setRefresh={setRefresh}
+        selectedIds={selectedIds}
+        setSelectedIds={setSelectedIds}
+      />
+      <ItemsWrapper>
+        {items.map((item, index) => (
+          <SingleItem key={index}>
+            <div>{item.name}</div>
+            <DeleteButton
+              itemId={item.id}
+              refresh={refresh}
+              setRefresh={setRefresh}
+              selectedIds={selectedIds}
+              setSelectedIds={setSelectedIds}
+            />
+          </SingleItem>
+        ))}
+      </ItemsWrapper>
     </ItemListWrapper>
   );
 };
 
-const ItemListWrapper = styled.ul`
-  margin-top: 30px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+const SingleItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 10px;
+  align-items: center;
+`;
+
+const ItemsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ItemListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 90em;
+  width: 100%;
   color: black;
+  align-items: center;
+  /* border: 1px solid black; */
+  background-color: lightsalmon;
 `;
 
 export default IngredientsSideBar;

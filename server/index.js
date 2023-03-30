@@ -4,7 +4,14 @@ const PORT = process.env.PORT || 3001;
 const morgan = require("morgan");
 const { MONGO_URI, API } = process.env;
 
-const { test, postUserIngredients, getUserIngredients } = require("./handlers");
+const {
+  postUserIngredients,
+  getUserIngredients,
+  delUserIngredient,
+  delAllUserIngredients,
+  getIngredientsQuery,
+  getUserAllRecipes,
+} = require("./handlers");
 
 express()
   // Below are methods that are included in express(). We chain them for convenience.
@@ -23,9 +30,12 @@ express()
   .use(express.urlencoded({ extended: false }))
   .use("/", express.static(__dirname + "/"))
 
-  .get("/test", test)
   .post("/api/userIngredients", postUserIngredients)
   .get("/api/userIngredients", getUserIngredients)
+  .get("/api/ingredientsQuery", getIngredientsQuery)
+  .get("/api/userRecipes", getUserAllRecipes)
+  .delete("/api/userIngredients", delUserIngredient)
+  .delete("/api/allUserIngredients", delAllUserIngredients)
 
   .get("*", (req, res) => {
     res.status(404).json({
