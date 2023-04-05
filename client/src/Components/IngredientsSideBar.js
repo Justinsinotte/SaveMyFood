@@ -3,6 +3,9 @@ import React from "react";
 import styled from "styled-components";
 import DeleteButton from "./DeleteButton";
 import ClearAllButton from "./ClearAllButton";
+import { useAuth0 } from "@auth0/auth0-react";
+import { FiDelete } from "react-icons/fi";
+
 const IngredientsSideBar = ({
   refresh,
   setRefresh,
@@ -11,6 +14,8 @@ const IngredientsSideBar = ({
   selectedIds,
   setSelectedIds,
 }) => {
+  const { user } = useAuth0();
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -33,6 +38,10 @@ const IngredientsSideBar = ({
   }, [refresh]);
 
   //   console.log(items);
+
+  if (!user) {
+    return <></>;
+  }
 
   return (
     <ItemListWrapper>
@@ -63,24 +72,31 @@ const SingleItem = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin-right: 10px;
-  align-items: center;
+  align-items: flex-end;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 18px;
+  /* border: 2px solid black; */
+  width: 100%;
+  padding: 2px;
+  overflow: hidden;
 `;
 
 const ItemsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
+  flex-direction: column; */
 `;
 
 const ItemListWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 90em;
+  height: 100%;
   width: 100%;
   color: black;
   align-items: center;
   /* border: 1px solid black; */
-  background-color: lightsalmon;
+  background-color: rgb(242, 225, 182);
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 export default IngredientsSideBar;

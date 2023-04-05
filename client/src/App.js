@@ -9,14 +9,32 @@ import Title from "./Components/Title";
 import MainRecipe from "./Components/MainRecipe";
 import DietBar from "./Components/DietBar";
 import SignInProfile from "./Components/SignInProfile";
-import RecipeBar from "./Components/RecipeBar";
+
+import Profile from "./Components/Profile";
+import RecipeDetails from "./Components/RecipeDetail";
 
 function App() {
+  const [isGluten, setIsGluten] = useState(false);
+  const [isDairy, setIsDairy] = useState(false);
+  const [isVegan, setIsVegan] = useState(false);
+  const [isVegetarian, setIsVegetarian] = useState(false);
+
   const [userIngredients, setUserIngredients] = useState([]);
   const [refresh, setRefresh] = useState(true);
   const [items, setItems] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedIds, setSelectedIds] = useState([]);
   const [recipes, setRecipes] = useState([]);
+  const [bulkRecipes, setBulkRecipes] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(() => {
+    const disabledObject = window.localStorage.getItem("isDisabled");
+    console.log(disabledObject);
+    if (JSON.parse(disabledObject)) {
+      return JSON.parse(disabledObject);
+    } else {
+      return {};
+    }
+  });
 
   return (
     <BrowserRouter>
@@ -34,7 +52,6 @@ function App() {
             setSelectedIds={setSelectedIds}
           />
         </LeftWrapper>
-
         <CenterWrapper>
           <IngredientSearchBar
             setUserIngredients={setUserIngredients}
@@ -45,17 +62,128 @@ function App() {
             setSelectedIds={setSelectedIds}
             recipes={recipes}
             setRecipes={setRecipes}
+            bulkRecipes={bulkRecipes}
+            setBulkRecipes={setBulkRecipes}
           />
-          <DietBar />
-          <MainRecipe
-            recipes={recipes}
-            setRecipes={setRecipes}
-            refresh={refresh}
+          <DietBar
+            isGluten={isGluten}
+            setIsGluten={setIsGluten}
+            isDairy={isDairy}
+            setIsDairy={setIsDairy}
+            isVegan={isVegan}
+            setIsVegan={setIsVegan}
+            isVegetarian={isVegetarian}
+            setIsVegetarian={setIsVegetarian}
           />
+          <Routes>
+            <Route
+              path="/recipeDetail/:itemId"
+              element={
+                <MainRecipe
+                  recipes={recipes}
+                  setRecipes={setRecipes}
+                  refresh={refresh}
+                  isDisabled={isDisabled}
+                  setIsDisabled={setIsDisabled}
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                  isGluten={isGluten}
+                  setIsGluten={setIsGluten}
+                  isDairy={isDairy}
+                  setIsDairy={setIsDairy}
+                  isVegan={isVegan}
+                  setIsVegan={setIsVegan}
+                  isVegetarian={isVegetarian}
+                  setIsVegetarian={setIsVegetarian}
+                />
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <MainRecipe
+                  recipes={recipes}
+                  setRecipes={setRecipes}
+                  refresh={refresh}
+                  isDisabled={isDisabled}
+                  setIsDisabled={setIsDisabled}
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                  isGluten={isGluten}
+                  setIsGluten={setIsGluten}
+                  isDairy={isDairy}
+                  setIsDairy={setIsDairy}
+                  isVegan={isVegan}
+                  setIsVegan={setIsVegan}
+                  isVegetarian={isVegetarian}
+                  setIsVegetarian={setIsVegetarian}
+                />
+              }
+            />
+            <Route
+              path="/savedrecipes"
+              element={
+                <Profile
+                  setRefresh={setRefresh}
+                  refresh={refresh}
+                  isDisabled={isDisabled}
+                  setIsDisabled={setIsDisabled}
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                />
+              }
+            />
+            <Route
+              path="/recipeDetails/:itemId"
+              element={
+                <Profile
+                  setRefresh={setRefresh}
+                  refresh={refresh}
+                  isDisabled={isDisabled}
+                  setIsDisabled={setIsDisabled}
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                />
+              }
+            />
+          </Routes>
         </CenterWrapper>
+        <SignInProfile />
         <RightWrapper>
-          <SignInProfile />
-          <RecipeBar />
+          <Routes>
+            {/* <Route path="/" element={<RecipeBar />} /> */}
+            <Route
+              path="/savedrecipes"
+              element={
+                <RecipeDetails
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                  setIsDisabled={setIsDisabled}
+                />
+              }
+            />
+            <Route
+              path="/recipeDetail/:itemId"
+              element={
+                <RecipeDetails
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                  setIsDisabled={setIsDisabled}
+                />
+              }
+            />
+            <Route
+              path="/recipeDetails/:itemId"
+              element={
+                <RecipeDetails
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                  isDisabled={isDisabled}
+                  setIsDisabled={setIsDisabled}
+                />
+              }
+            />
+          </Routes>
         </RightWrapper>
       </MasterWrapper>
     </BrowserRouter>
@@ -65,24 +193,30 @@ function App() {
 const RightWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 10%;
-  background-color: antiquewhite;
+  width: 0%;
+  background-color: pink;
+  height: 100%;
 `;
 
 const LeftWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 20.2%;
+  height: 100%;
 `;
 
 const CenterWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 69.8%;
+  width: 80.8%;
+  height: 100%;
+  /* background-color: red; */
 `;
 
 const MasterWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  /* background-color: blue; */
+  height: 100%;
 `;
 export default App;

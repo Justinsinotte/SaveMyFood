@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import { FiDelete } from "react-icons/fi";
 const DeleteButton = ({ itemId, setRefresh, selectedIds, setSelectedIds }) => {
   const handleDelete = async () => {
     try {
@@ -27,26 +27,19 @@ const DeleteButton = ({ itemId, setRefresh, selectedIds, setSelectedIds }) => {
     }
   };
 
-  return <Button onClick={handleDelete}>X</Button>;
+  return (
+    <Button onClick={handleDelete}>
+      <FiDelete />
+    </Button>
+  );
 };
 
-const Button = styled.button`
-  height: 1.5em;
-  padding: 0px;
-  width: 1.5em;
-  margin-left: 0.7em;
-  color: white;
-  background-color: rgb(0 106 200 / 74%);
-  border: none;
-  transition: background-color 0.3s ease-in-out;
-
+const Button = styled(FiDelete)`
+  font-size: 15px;
+  margin-left: 2px;
+  color: slategray;
   &:hover {
-    background-color: rgba(0, 106, 200, 0.9);
-  }
-
-  &:active {
-    background-color: rgba(0, 106, 200, 1);
+    color: rgb(237, 193, 152);
   }
 `;
-
 export default DeleteButton;

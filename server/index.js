@@ -11,6 +11,12 @@ const {
   delAllUserIngredients,
   getIngredientsQuery,
   getUserAllRecipes,
+  getRecipesInfoQuery,
+  getBulkRecipes,
+  postRecipeToFav,
+  getFaveRecipes,
+  delFaveRecipes,
+  getSingleRecipe,
 } = require("./handlers");
 
 express()
@@ -34,8 +40,16 @@ express()
   .get("/api/userIngredients", getUserIngredients)
   .get("/api/ingredientsQuery", getIngredientsQuery)
   .get("/api/userRecipes", getUserAllRecipes)
+  .get("/api/userRecipesIdQuery", getRecipesInfoQuery)
+  .get("/api/userBulkRecipes", getBulkRecipes)
   .delete("/api/userIngredients", delUserIngredient)
   .delete("/api/allUserIngredients", delAllUserIngredients)
+
+  .post("/api/favRecipes", postRecipeToFav)
+  .get("/api/favRecipes", getFaveRecipes)
+  .delete("/api/favRecipes", delFaveRecipes)
+
+  .get("/api/userBulkRecipes/:itemId", getSingleRecipe)
 
   .get("*", (req, res) => {
     res.status(404).json({

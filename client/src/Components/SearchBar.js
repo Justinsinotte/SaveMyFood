@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import React from "react";
 import { newDataArray } from "../Functions/objectArray";
 import SearchButton from "./SearchButton";
+import { useAuth0 } from "@auth0/auth0-react";
+import { FaSearch } from "react-icons/fa";
 const SearchBar = ({
   userIngredients,
   setUserIngredients,
@@ -12,7 +14,10 @@ const SearchBar = ({
   setSelectedIds,
   recipes,
   setRecipes,
+  bulkRecipes,
+  setBulkRecipes,
 }) => {
+  const { user } = useAuth0();
   const suggestionBoxRef = useRef(null);
   const [inputValue, setInputValue] = useState("");
   const [ingredients, setIngredients] = useState([]);
@@ -82,12 +87,14 @@ const SearchBar = ({
 
     fetchData();
   }, []);
-
+  if (!user) {
+    return <></>;
+  }
   return (
     <MainDiv>
       <InputWrapper>
         <Input
-          placeholder="Search for ingredients..."
+          placeholder={`Search for ingredients...`}
           type="text"
           value={inputValue}
           onChange={(ev) => {
@@ -95,9 +102,14 @@ const SearchBar = ({
             setShowSuggestions(true);
           }}
         />
-        <SearchButton recipes={recipes} setRecipes={setRecipes} />
-        {/* <Button onClick={handleClear}>Clear</Button> */}
       </InputWrapper>
+      <SearchButton
+        recipes={recipes}
+        setRecipes={setRecipes}
+        bulkRecipes={bulkRecipes}
+        setBulkRecipes={setBulkRecipes}
+      />
+
       {inputValue.length >= 1 &&
         filteredSuggestions.length > 0 &&
         showSuggestions && (
@@ -129,28 +141,37 @@ const MainDiv = styled.div`
   top: 0;
   left: 21%; */
   display: flex;
-  flex-direction: column;
-  /* height: 4em; */
+  flex-direction: row;
+  height: 56px;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: rgb(242, 225, 182);
 
   /* border: 1px solid black; */
-  background-color: lightblue;
+  /* background-color: lightblue; */
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: row;
   margin-left: em;
-  width: 40em;
+  width: 640px;
   align-items: center;
   flex-direction: row;
+  border: none;
 `;
 const Suggestions = styled.div`
+  font-size: 10px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: black;
   position: absolute;
-  top: 3em;
-  width: 25em;
-  margin-top: 0.5em;
+  top: 48px;
+  width: 400px;
+  left: 350px;
+  margin-top: 8px;
   padding: 0;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  opacity: 0.95;
   background-color: white;
   border: 1px solid lightgray;
   border-radius: 3px;
@@ -158,7 +179,7 @@ const Suggestions = styled.div`
 `;
 
 const SuggestionItem = styled.div`
-  padding: 0.4em;
+  padding: 6.4px;
   cursor: pointer;
   &:hover {
     background-color: lightgoldenrodyellow;
@@ -172,21 +193,23 @@ const SuggestionItem = styled.div`
 `;
 
 const Input = styled.input`
-  padding: 1.4em;
+  padding: 8.4px;
   width: 80%;
+  height: 20px;
   border: 1px solid lightgray;
   border-radius: 15px;
+  outline: none;
 `;
 
-const Button = styled.button`
-  height: 4em;
-  padding: 1.2em;
-  width: 7em;
-  margin-left: 0.7em;
-  color: white;
-  background-color: rgb(0 106 200 / 74%);
-  border-radius: 15px;
-  border: none;
-`;
+// const Button = styled.button`
+//   height: 64px;
+//   padding: 19.2px;
+//   width: 112px;
+//   margin-left: 11.2px;
+//   color: white;
+//   background-color: rgb(0 106 200 / 74%);
+//   border-radius: 15px;
+//   border: none;
+// `;
 
 export default SearchBar;

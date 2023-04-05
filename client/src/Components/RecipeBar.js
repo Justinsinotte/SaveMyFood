@@ -6,7 +6,7 @@ const RecipeBar = ({}) => {
 
 const Div = styled.div`
   display: flex;
-  background-color: sienna;
+
   width: 100%;
   height: 100%;
 `;

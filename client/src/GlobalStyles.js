@@ -49,6 +49,17 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+  height:100vh;
+  overflow:hidden;
+  font-family: 'Pacifico', cursive;
+  background-color:rgb(255, 255, 245);
+  margin:0;
+  padding:0;
+}
+
+#root {
+height:100vh;
+
 }
 ol, ul {
 	list-style: none;
@@ -66,4 +77,3 @@ table {
 	border-spacing: 0;
 }
 `;
-

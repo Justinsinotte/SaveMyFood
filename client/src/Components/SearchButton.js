@@ -1,12 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-const handleClick = async (recipes, setRecipes) => {
+const handleClick = async (
+  recipes,
+  setRecipes,
+  bulkRecipes,
+  setBulkRecipes
+) => {
   try {
     const response = await fetch("/api/ingredientsQuery");
     const data = await response.json();
     if (response.status === 200) {
       setRecipes(data.data);
+      const response2 = await fetch("/api/userRecipesIdQuery");
+      const data2 = await response.json();
+      setBulkRecipes(data.data);
     } else {
       console.error("Error: The items were not found.", data);
     }
@@ -24,17 +32,17 @@ const SearchButton = ({ recipes, setRecipes }) => {
 };
 
 const Button = styled.button`
-  height: 2em;
-  padding: 0.2em;
-  width: 21em;
+  height: 32px;
+  padding: 3.2px;
+  width: 270px;
 
-  color: white;
-  background-color: rgba(0, 106, 200, 0.74);
+  background-color: white;
+
   border-radius: 15px;
   border: none;
 
   &:hover {
-    background-color: rgba(0, 106, 200, 0.9);
+    background-color: rgb(237, 193, 152);
   }
 
   &:active {

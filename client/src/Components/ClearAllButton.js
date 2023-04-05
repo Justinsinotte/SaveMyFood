@@ -26,16 +26,17 @@ const ClearAllButton = ({ setRefresh, setSelectedIds }) => {
 };
 
 const Button = styled.button`
-  height: 2em;
+  height: 40px;
   padding: 0.2em;
-  width: 15em;
-
-  color: white;
-  background-color: rgba(0, 106, 200, 0.74);
+  width: 180px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  color: black;
+  background-color: white;
   border-radius: 15px;
   border: none;
   &:hover {
-    background-color: rgba(0, 106, 200, 0.9);
+    background-color: rgb(237, 193, 152);
   }
 
   &:active {
