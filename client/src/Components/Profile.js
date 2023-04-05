@@ -15,10 +15,12 @@ const Profile = ({
   setButtonText,
   isOpen,
   setIsOpen,
+  item,
+  setItem,
 }) => {
-  console.log(refresh);
+  // console.log(refresh);
   const [faves, setFaves] = useState([]);
-  const [item, setItem] = useState(null);
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -72,12 +74,14 @@ const Img = styled.img`
 const ItemWrapper = styled.div`
   display: flex;
   flex-direction: row;
+
   justify-content: flex-start;
   margin-right: 10px;
   align-items: center;
-  border: 1px solid black;
-  width: 20%;
-  height: 20%;
+  /* border: 1px solid black; */
+  width: 440px;
+  height: 100px;
+  margin-bottom: 10px;
 `;
 
 const ItemsWrapper = styled.div`
@@ -91,11 +95,12 @@ const MainDiv = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-start;
-
+  background-color: rgb(255, 255, 245);
   width: 100%;
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
+  margin-left: 60px;
 `;
 
 export default Profile;

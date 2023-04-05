@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -11,11 +12,17 @@ const DietBar = ({
   setIsVegan,
   isVegetarian,
   setIsVegetarian,
+  recItemId,
+  setRecItemId,
 }) => {
+  const { pathname } = useLocation();
+  console.log(recItemId);
   const { user } = useAuth0();
   const location = useLocation();
   const hideOnSavedRecipesPage = location.pathname === "/savedrecipes";
-
+  const hideOnSavedDetails =
+    location.pathname === `/recipeDetails/${recItemId}`;
+  console.log(location.pathname);
   const handleGlutenClick = () => {
     setIsGluten(!isGluten);
     setIsDairy(false);
@@ -44,7 +51,7 @@ const DietBar = ({
     setIsVegetarian(!isVegetarian);
   };
 
-  if (hideOnSavedRecipesPage || !user) {
+  if (hideOnSavedRecipesPage || !user || hideOnSavedDetails) {
     return <Div></Div>;
   }
 

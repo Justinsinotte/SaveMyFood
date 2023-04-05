@@ -26,7 +26,7 @@ const ClearAllButton = ({ setRefresh, setSelectedIds }) => {
 };
 
 const Button = styled.button`
-  height: 40px;
+  /* height: 40px; */
   padding: 0.2em;
   width: 180px;
   margin-top: 10px;
@@ -40,7 +40,7 @@ const Button = styled.button`
   }
 
   &:active {
-    background-color: rgba(0, 106, 200, 1);
+    background-color: rgba(237, 193, 152);
   }
 `;
 

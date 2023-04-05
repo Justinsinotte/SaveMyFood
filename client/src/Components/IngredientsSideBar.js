@@ -89,7 +89,7 @@ const ItemsWrapper = styled.div`
 const ItemListWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 102%;
   width: 100%;
   color: black;
   align-items: center;

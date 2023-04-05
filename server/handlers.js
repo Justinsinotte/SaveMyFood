@@ -140,7 +140,7 @@ const getIngredientsQuery = async (req, res) => {
       .map((item) => item.name.replace(/\s+/g, "+"))
       .join(",");
     const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${query}&number=60&ranking=2&ignorePantry${API}`;
-    // const url = `https://api.spoonacular.com/recipes/complexSearch?includIngredients=${query}&number=20&ignorePantry${API}`;
+    // const url = `https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${query}&number=60&ignorePantry${API}`;
     const response = await fetch(url);
     const data = await response.json();
     await db.collection("userRecipes").deleteMany({});

@@ -46,7 +46,7 @@ const Button = styled.button`
   }
 
   &:active {
-    background-color: rgba(0, 106, 200, 1);
+    background-color: rgba(237, 193, 152);
   }
 `;
 

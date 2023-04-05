@@ -1,0 +1,9 @@
+import { faCircleXmark } from "react-icons/fi";
+
+export default function RedHeart({ children }) {
+  return (
+    <>
+      <FontAwesomeIcon icon={faCircleXmark} />
+    </>
+  );
+}

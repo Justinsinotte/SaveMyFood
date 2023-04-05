@@ -18,7 +18,8 @@ function App() {
   const [isDairy, setIsDairy] = useState(false);
   const [isVegan, setIsVegan] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
-
+  const [item, setItem] = useState(null);
+  const [recItemId, setRecItemId] = useState(null);
   const [userIngredients, setUserIngredients] = useState([]);
   const [refresh, setRefresh] = useState(true);
   const [items, setItems] = useState([]);
@@ -28,7 +29,7 @@ function App() {
   const [bulkRecipes, setBulkRecipes] = useState([]);
   const [isDisabled, setIsDisabled] = useState(() => {
     const disabledObject = window.localStorage.getItem("isDisabled");
-    console.log(disabledObject);
+    // console.log(disabledObject);
     if (JSON.parse(disabledObject)) {
       return JSON.parse(disabledObject);
     } else {
@@ -74,6 +75,8 @@ function App() {
             setIsVegan={setIsVegan}
             isVegetarian={isVegetarian}
             setIsVegetarian={setIsVegetarian}
+            recItemId={recItemId}
+            setRecItemId={setRecItemId}
           />
           <Routes>
             <Route
@@ -130,6 +133,8 @@ function App() {
                   setIsDisabled={setIsDisabled}
                   isOpen={isOpen}
                   setIsOpen={setIsOpen}
+                  item={item}
+                  setItem={setItem}
                 />
               }
             />
@@ -143,6 +148,10 @@ function App() {
                   setIsDisabled={setIsDisabled}
                   isOpen={isOpen}
                   setIsOpen={setIsOpen}
+                  item={item}
+                  setItem={setItem}
+                  recItemId={recItemId}
+                  setRecItemId={setRecItemId}
                 />
               }
             />
@@ -159,6 +168,8 @@ function App() {
                   isOpen={isOpen}
                   setIsOpen={setIsOpen}
                   setIsDisabled={setIsDisabled}
+                  recItemId={recItemId}
+                  setRecItemId={setRecItemId}
                 />
               }
             />
@@ -169,6 +180,8 @@ function App() {
                   isOpen={isOpen}
                   setIsOpen={setIsOpen}
                   setIsDisabled={setIsDisabled}
+                  recItemId={recItemId}
+                  setRecItemId={setRecItemId}
                 />
               }
             />
@@ -180,6 +193,8 @@ function App() {
                   setIsOpen={setIsOpen}
                   isDisabled={isDisabled}
                   setIsDisabled={setIsDisabled}
+                  recItemId={recItemId}
+                  setRecItemId={setRecItemId}
                 />
               }
             />

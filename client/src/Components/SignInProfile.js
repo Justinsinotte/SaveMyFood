@@ -12,7 +12,7 @@ const SignInProfile = () => {
   const navigate = useNavigate();
   const { user, logout, loginWithRedirect } = useAuth0();
 
-  console.log(user);
+  // console.log(user);
 
   if (!user) {
     return (
@@ -75,7 +75,7 @@ const Div = styled.div`
   align-items: center;
   /* background-color: lightseagreen; */
   width: 10%;
-  height: 49.5px;
+  height: 50.2px;
   background-color: rgb(242, 225, 182);
 `;
 

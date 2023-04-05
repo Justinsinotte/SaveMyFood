@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import SingleItem from "./SingleItem";
 import { FiXCircle, FiHeart } from "react-icons/fi";
 
-const RecipeDetail = ({ isOpen, setIsOpen }) => {
+const RecipeDetail = ({ isOpen, setIsOpen, recItemId, setRecItemId }) => {
+  const { state } = useLocation();
   const [item, setItem] = useState(null);
   // console.log(isOpen);
   const { itemId } = useParams();
   const numberItemId = Number(itemId);
-  console.log(numberItemId);
+  setRecItemId(numberItemId);
   //fetching the details of a single item using the Id
   useEffect(() => {
     const fetchItem = async () => {
@@ -17,7 +18,7 @@ const RecipeDetail = ({ isOpen, setIsOpen }) => {
         const response = await fetch(`/api/userBulkRecipes/${numberItemId}`);
 
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         if (response.status === 200) {
           setItem(data.data);
         } else {
@@ -30,14 +31,6 @@ const RecipeDetail = ({ isOpen, setIsOpen }) => {
     fetchItem();
   }, [numberItemId]);
 
-  // const RecipeInstructions = ({ item }) => {
-  //   return (
-  //     <RecipeInsWrapper
-  //       dangerouslySetInnerHTML={{ __html: item.instructions }}
-  //     ></RecipeInsWrapper>
-  //   );
-  // };
-  // console.log(RecipeInstructions);
   if (item && item.image) {
     return (
       <Wrapper>
