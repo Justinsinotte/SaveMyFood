@@ -5,12 +5,12 @@
 
 My Final Project for CB-WD-23 (Concordia Bootcamp Web Development)
 
-This is a web application that allows users to search for and save recipes. The application utilizes a frontend built with React, 
-and a backend built with Node.js and MongoDB.
+This is a web application that allows users to search for and save recipes based on the ingredients they have at home. 
+The application utilizes a frontend built with React, and a backend built with Node.js and MongoDB.
 
 <h2>Features</h2>
 
-Users can search for recipes based on ingredients they have in their cupboards 
+Users can search for recipes based on ingredients they have in their homes 
 Users can save recipes to their account for later viewing
 Users can filter search results based on dietary restrictions (gluten-free, dairy-free, vegan, vegetarian)
 User authentication and authorization using Auth0// though it is a simple "Log IN/ Log OUT" function at the moment.
