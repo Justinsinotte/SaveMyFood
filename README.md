@@ -1,8 +1,9 @@
-# <h1>Save My Food</h1>
-My Final Project for CB-WD-23
+
 
 
 <h1>Save My Food!</h1>
+
+My Final Project for CB-WD-23 (Concordia Bootcamp Web Development)
 
 This is a web application that allows users to search for and save recipes. The application utilizes a frontend built with React, 
 and a backend built with Node.js and MongoDB.
