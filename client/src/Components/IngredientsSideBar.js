@@ -23,9 +23,7 @@ const IngredientsSideBar = ({
         const data = await response.json();
 
         if (response.status === 200) {
-          //   console.log(data.data);
           setItems(data.data);
-          //   console.log(items);
         } else {
           console.error("Error: The items were not found.", data);
         }
@@ -34,10 +32,7 @@ const IngredientsSideBar = ({
       }
     };
     fetchItems();
-    // console.log(refresh);
   }, [refresh]);
-
-  //   console.log(items);
 
   if (!user) {
     return <></>;

@@ -31,9 +31,7 @@ const MainRecipe = ({
         const data = await response.json();
 
         if (response.status === 200) {
-          // console.log(data.data);
           setRecipes(data.data);
-          // console.log(recipes);
         } else {
           console.error("Error: The items were not found.", data);
         }
@@ -44,8 +42,6 @@ const MainRecipe = ({
     fetchItems();
   }, [refresh]);
 
-  // console.log(recipes);
-  // console.log(`isVegetarian is: ${isVegetarian}`);
   if (!user) {
     return <></>;
   } else if (isGluten) {

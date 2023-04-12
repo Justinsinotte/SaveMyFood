@@ -22,9 +22,6 @@ const SearchBar = ({
   const [inputValue, setInputValue] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  // const handleClear = () => {
-  //   setInputValue("");
-  // };
 
   const filteredSuggestions = ingredients.filter((ingredient) => {
     const ingredientLowerCase = ingredient.name.toLowerCase();
@@ -41,7 +38,6 @@ const SearchBar = ({
     setSelectedIds([...selectedIds, id]);
     setInputValue(inputValue);
 
-    // setShowSuggestions(false);
     const addUserIngredient = async () => {
       try {
         const response = await fetch("/api/userIngredients", {
@@ -200,16 +196,5 @@ const Input = styled.input`
   border-radius: 15px;
   outline: none;
 `;
-
-// const Button = styled.button`
-//   height: 64px;
-//   padding: 19.2px;
-//   width: 112px;
-//   margin-left: 11.2px;
-//   color: white;
-//   background-color: rgb(0 106 200 / 74%);
-//   border-radius: 15px;
-//   border: none;
-// `;
 
 export default SearchBar;

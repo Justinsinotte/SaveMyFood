@@ -113,7 +113,7 @@ const delAllUserIngredients = async (req, res) => {
     const db = client.db("finalProject");
 
     await db.collection("userIngredients").deleteMany({});
-    // await db.collection("userRecipes").deleteMany({});
+
     res.status(200).json({
       status: 200,
       message: "Deleted Ingredient",
@@ -139,7 +139,7 @@ const getIngredientsQuery = async (req, res) => {
     const query = cartItems
       .map((item) => item.name.replace(/\s+/g, "+"))
       .join(",");
-    const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${query}&number=60&ranking=2&ignorePantry${API}`;
+    const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${query}&number=50&ranking=2&ignorePantry${API}`;
     // const url = `https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${query}&number=60&ignorePantry${API}`;
     const response = await fetch(url);
     const data = await response.json();
@@ -169,7 +169,6 @@ const getRecipesInfoQuery = async (req, res) => {
     await client.connect();
 
     const db = client.db("finalProject");
-    // await db.collection("bulkRecipes").deleteMany({}); // remove all documents from userRecipes collection
 
     const cartItems = await db.collection("userRecipes").find().toArray();
     const query = cartItems.map((item) => item.id).join(",");
@@ -243,26 +242,6 @@ const getBulkRecipes = async (req, res) => {
   }
 };
 
-// const postAllRecipes = async (req, res) => {
-//   try {
-//     const client = new MongoClient(MONGO_URI, options);
-//     await client.connect();
-//     const db = client.db("finalProject");
-//     const newRecipe = req.body;
-//     const id = uuidv4();
-//     newRecipe_id = id;
-
-//     await db.collection("allRecipes").insertMany(newOrder);
-//     res.status(201).json({ status: 201, data: newRecipe });
-
-//     await client.close();
-//   } catch (err) {
-//     console.log(err.stack);
-//     res.status(500).json({ status: 500, data: req.body, message: err.message });
-//     await client.close();
-//   }
-// };
-
 const delAllRecipes = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   try {
@@ -293,9 +272,6 @@ const postRecipeToFav = async (req, res) => {
     const itemAmount = req.body.itemAmount;
     const id = uuidv4();
     newOrder._id = id;
-
-    // const itemMongo = await db.collection("items").findOne({ _id: itemId });
-    // const numInStock = itemMongo.numInStock;
 
     await db.collection("favRecipes").insertOne(newOrder);
     res.status(201).json({ status: 201, data: newOrder });

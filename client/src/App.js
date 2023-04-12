@@ -29,7 +29,7 @@ function App() {
   const [bulkRecipes, setBulkRecipes] = useState([]);
   const [isDisabled, setIsDisabled] = useState(() => {
     const disabledObject = window.localStorage.getItem("isDisabled");
-    // console.log(disabledObject);
+  
     if (JSON.parse(disabledObject)) {
       return JSON.parse(disabledObject);
     } else {

@@ -7,18 +7,18 @@ import { FiXCircle, FiHeart } from "react-icons/fi";
 const RecipeDetail = ({ isOpen, setIsOpen, recItemId, setRecItemId }) => {
   const { state } = useLocation();
   const [item, setItem] = useState(null);
-  // console.log(isOpen);
+
   const { itemId } = useParams();
   const numberItemId = Number(itemId);
   setRecItemId(numberItemId);
-  //fetching the details of a single item using the Id
+
   useEffect(() => {
     const fetchItem = async () => {
       try {
         const response = await fetch(`/api/userBulkRecipes/${numberItemId}`);
 
         const data = await response.json();
-        // console.log(data);
+
         if (response.status === 200) {
           setItem(data.data);
         } else {

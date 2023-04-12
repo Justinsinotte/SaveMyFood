@@ -8,11 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { FiBookmark } from "react-icons/fi";
 
 const SignInProfile = () => {
-  // const { isLoading, error } = useAuth0();
   const navigate = useNavigate();
   const { user, logout, loginWithRedirect } = useAuth0();
-
-  // console.log(user);
 
   if (!user) {
     return (

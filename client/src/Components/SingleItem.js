@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Item = ({ data, isDisabled, setIsDisabled, isOpen, setIsOpen }) => {
   const navigate = useNavigate();
-  // console.log(data.id);
+
   const addItemToCard = (event) => {
     event.preventDefault();
     setIsDisabled(true);
@@ -26,11 +26,9 @@ const Item = ({ data, isDisabled, setIsDisabled, isOpen, setIsOpen }) => {
         console.log(newArray);
         setIsDisabled(newArray);
         window.localStorage.setItem("isDisabled", JSON.stringify(newArray));
-        // setIsDisabled(true);
       })
       .catch((error) => console.log(error));
   };
-  // console.log(isDisabled.data.id);
 
   const handleClick = () => {
     navigate(`/recipeDetail/${data.id}`);

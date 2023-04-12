@@ -18,7 +18,6 @@ const Profile = ({
   item,
   setItem,
 }) => {
-  // console.log(refresh);
   const [faves, setFaves] = useState([]);
 
   useEffect(() => {
@@ -28,7 +27,6 @@ const Profile = ({
         const data = await response.json();
 
         if (response.status === 200) {
-          // console.log(data.data[0]);
           setFaves(data.data);
         } else {
           console.error("Error: The items were not found.", data);
@@ -38,9 +36,7 @@ const Profile = ({
       }
     };
     fetchItems();
-    // console.log(refresh);
   }, [refresh]);
-  // console.log(faves);
 
   return (
     <MainDiv>

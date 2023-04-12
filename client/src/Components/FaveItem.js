@@ -17,7 +17,6 @@ const FaveItem = ({
   const navigate = useNavigate();
   const itemDelete = async () => {
     try {
-      // console.log(refresh);
       await fetch(`/api/favRecipes`, {
         method: "DELETE",
         headers: {
