@@ -1,5 +1,7 @@
+![SaveMyFoodExample](https://user-images.githubusercontent.com/117525270/234014605-cc98c350-a996-4327-9830-5cb5f1ed9b72.gif)
+
 <h1>Save My Food!</h1>
-![Untitled](https://user-images.githubusercontent.com/117525270/234013979-9690c66a-a61f-48bd-9927-3b74bf7d0cc1.gif)
+
 
 My Final Project for CB-WD-23 (Concordia Bootcamp Web Development)
 
